@@ -70,3 +70,22 @@ let test_lib_cmake_file name =
   in
   Printf.sprintf fmt name name name name name name name name
 ;;
+
+let clang_format_file () =
+  "# SPDX-License-Identifier: GPL-2.0\n\
+   #\n\
+   # clang-format configuration file. Intended for clang-format >= 11.\n\
+   #\n\
+   # For more information, see:\n\
+   #\n\
+   #   Documentation/process/clang-format.rst\n\
+   #   https://clang.llvm.org/docs/ClangFormat.html\n\
+   #   https://clang.llvm.org/docs/ClangFormatStyleOptions.html\n\
+   #\n\
+   ---\n\
+   # We'll use defaults from the LLVM style, but with 4 columns indentation.\n\
+   BasedOnStyle: LLVM\n\
+   PointerAlignment: Left\n\
+   IndentWidth: 4\n\
+   ..."
+;;

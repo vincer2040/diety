@@ -83,14 +83,22 @@ let create_gitignore path =
   close_out channel
 ;;
 
+let create_clang_format path =
+    let channel = open_out path in
+    Cmake.clang_format_file () |> output_string channel;
+    close_out channel;
+;;
+
 let init name binary_type =
   let main_cmake_path_fmt = format_of_string "%s/CMakeLists.txt" in
+  let clang_format_path_fmt = format_of_string "%s/.clang-format" in
   let gitignore_path_fmt = format_of_string "%s/.gitignore" in
   let test_cmake_path_fmt = format_of_string "%s/tests/CMakeLists.txt" in
   let src_path_fmt = format_of_string "%s/src/%s.c" in
   let hdr_path_fmt = format_of_string "%s/src/%s.h" in
   let test_path_fmt = format_of_string "%s/tests/%s_test.c" in
   create_dir name;
+  Printf.sprintf clang_format_path_fmt name |> create_clang_format;
   create_gitignore (Printf.sprintf gitignore_path_fmt name);
   Printf.sprintf main_cmake_path_fmt name |> create_main_cmake name binary_type;
   Printf.sprintf test_cmake_path_fmt name |> create_test_cmake name binary_type;

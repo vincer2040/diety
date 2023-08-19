@@ -80,7 +80,7 @@ let create_dir name =
 let create_gitignore path =
   let channel = open_out path in
   output_string channel "build";
-  close_out channel;
+  close_out channel
 ;;
 
 let init name binary_type =

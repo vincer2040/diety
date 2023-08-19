@@ -1,0 +1,4 @@
+(executable
+ (public_name diety)
+ (name main)
+ (libraries cmake src))

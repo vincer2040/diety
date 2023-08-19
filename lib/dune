@@ -1,0 +1,7 @@
+(library
+ (name cmake)
+ (modules cmake))
+
+(library
+ (name src)
+ (modules src))

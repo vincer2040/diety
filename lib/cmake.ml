@@ -44,3 +44,29 @@ let bin_main_cmake_file name =
   in
   Printf.sprintf fmt name name name name
 ;;
+
+let test_bin_cmake_file name =
+  let fmt =
+    format_of_string
+      "add_executable(%s_test %s_test.c)\n\n\
+       target_link_libraries(%s_test PUBLIC check pthread)\n\n\
+       target_include_directories(%s_test PUBLIC \"${PROJECT_BINARY_DIR}\")\n\n\
+       add_test(NAME %s_test COMMAND %s_test WORKING_DIRECTORY \
+       ${CMAKE_BINARY_DIR}/Testing)\n\
+       set_tests_properties(%s_test PROPERTIES TIMEOUT 30)"
+  in
+  Printf.sprintf fmt name name name name name name name
+;;
+
+let test_lib_cmake_file name =
+  let fmt =
+    format_of_string
+      "add_executable(%s_test ../src/%s.c %s_test.c)\n\n\
+       target_link_libraries(%s_test PUBLIC check pthread)\n\n\
+       target_include_directories(%s_test PUBLIC \"${PROJECT_BINARY_DIR}\")\n\n\
+       add_test(NAME %s_test COMMAND %s_test WORKING_DIRECTORY \
+       ${CMAKE_BINARY_DIR}/Testing)\n\
+       set_tests_properties(%s_test PROPERTIES TIMEOUT 30)"
+  in
+  Printf.sprintf fmt name name name name name name name name
+;;

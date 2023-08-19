@@ -33,11 +33,23 @@ let create_main_cmake name binary_type =
 ;;
 
 let create_main_file name binary_type =
-    match binary_type with
-    | Binary -> Src.main_bin_file () |> Printf.printf "%s\n"
-    | Library ->
-            Src.main_lib_file () |> Printf.printf "%s\n";
-            Src.main_lib_header name |> Printf.printf "%s\n";
+  match binary_type with
+  | Binary -> Src.main_bin_file () |> Printf.printf "%s\n"
+  | Library ->
+    Src.main_lib_file () |> Printf.printf "%s\n";
+    Src.main_lib_header name |> Printf.printf "%s\n"
+;;
+
+let create_test_cmake name binary_type =
+  match binary_type with
+  | Binary -> Cmake.test_bin_cmake_file name |> Printf.printf "%s\n"
+  | Library -> Cmake.test_lib_cmake_file name |> Printf.printf "%s\n"
+;;
+
+let create_test_file name binary_type =
+  match binary_type with
+  | Binary -> Src.bin_test_file name |> Printf.printf "%s\n"
+  | Library -> Src.lib_test_file name |> Printf.printf "%s\n"
 ;;
 
 let () =
@@ -57,4 +69,6 @@ let () =
   in
   create_main_cmake name project_type;
   create_main_file name project_type;
+  create_test_cmake name project_type;
+  create_test_file name project_type
 ;;

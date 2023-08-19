@@ -19,3 +19,76 @@ let main_lib_header name =
   in
   Printf.sprintf fmt upper upper upper
 ;;
+
+let lib_test_file name =
+  let fmt =
+    format_of_string
+      "#include \"../src/%s.h\"\n\
+       #include <check.h>\n\
+       #include <stdint.h>\n\
+       #include <stdio.h>\n\
+       #include <stdlib.h>\n\
+       #include <string.h>\n\n\n\
+       START_TEST(test_it_works) {\n\
+      \    ck_assert_int_eq(add(1, 1), 2);\n\
+       }\n\
+       END_TEST\n\n\
+       Suite* ht_suite() {\n\
+      \    Suite* s;\n\
+      \    TCase* tc_core;\n\
+      \    s = suite_create(\"%s_test\");\n\
+      \    tc_core = tcase_create(\"Core\");\n\
+      \    tcase_add_test(tc_core, test_it_works);\n\
+      \    suite_add_tcase(s, tc_core);\n\
+      \    return s;\n\
+       }\n\n\
+       int main() {\n\
+      \    int number_failed;\n\
+      \    Suite* s;\n\
+      \    SRunner* sr;\n\
+      \    s = ht_suite();\n\
+      \    sr = srunner_create(s);\n\
+      \    srunner_run_all(sr, CK_NORMAL);\n\
+      \    number_failed = srunner_ntests_failed(sr);\n\
+      \    srunner_free(sr);\n\
+      \    return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;\n\
+       }"
+  in
+  Printf.sprintf fmt name name
+;;
+
+let bin_test_file name =
+  let fmt =
+    format_of_string
+      "#include <check.h>\n\
+       #include <stdint.h>\n\
+       #include <stdio.h>\n\
+       #include <stdlib.h>\n\
+       #include <string.h>\n\n\n\
+       START_TEST(test_it_works) {\n\
+      \    ck_assert_int_eq(1, 1);\n\
+       }\n\
+       END_TEST\n\n\
+       Suite* ht_suite() {\n\
+      \    Suite* s;\n\
+      \    TCase* tc_core;\n\
+      \    s = suite_create(\"%s_test\");\n\
+      \    tc_core = tcase_create(\"Core\");\n\
+      \    tcase_add_test(tc_core, test_it_works);\n\
+      \    suite_add_tcase(s, tc_core);\n\
+      \    return s;\n\
+       }\n\n\
+       int main() {\n\
+      \    int number_failed;\n\
+      \    Suite* s;\n\
+      \    SRunner* sr;\n\
+      \    s = ht_suite();\n\
+      \    sr = srunner_create(s);\n\
+      \    srunner_run_all(sr, CK_NORMAL);\n\
+      \    number_failed = srunner_ntests_failed(sr);\n\
+      \    srunner_free(sr);\n\
+      \    return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;\n\
+       }"
+  in
+  Printf.sprintf fmt name
+;;

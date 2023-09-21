@@ -1,8 +1,16 @@
-let main_bin_file () =
+let main_c_bin_file () =
   "#include <stdio.h>\n\n\
    int main(void) {\n\
   \    printf(\"hello world\\n\");\n\
   \    return 0;\n\
+   }"
+;;
+
+let main_cpp_bin_file () =
+  "#include <iostream>\n\n\
+   int main(void) {\n\
+  \   std::cout << \"hello world\" << \"\\n\";\n\
+  \   return 0;\n\
    }"
 ;;
 
@@ -20,7 +28,7 @@ let main_lib_header name =
   Printf.sprintf fmt upper upper upper
 ;;
 
-let lib_test_file name =
+let lib_c_test_file name =
   let fmt =
     format_of_string
       "#include \"../src/%s.h\"\n\
@@ -57,7 +65,7 @@ let lib_test_file name =
   Printf.sprintf fmt name name
 ;;
 
-let bin_test_file name =
+let bin_c_test_file name =
   let fmt =
     format_of_string
       "#include <check.h>\n\
@@ -91,4 +99,23 @@ let bin_test_file name =
        }"
   in
   Printf.sprintf fmt name
+;;
+
+let lib_cpp_test_file name =
+  let fmt =
+    format_of_string
+      "#include \"../src/%s.hh\"\n\
+       #include <gtest/gtest.h>\n\n\
+       TEST(AddTest, SimpleAssertions) {\n\
+      \   EXPECT_EQ(add(1, 1), 2);\n\
+       }"
+  in
+  Printf.sprintf fmt name
+;;
+
+let bin_cpp_test_file () =
+  "#include <gtest/gtest.h>\n\n\
+   TEST(AddTest, SimpleAssertions) {\n\
+  \   EXPECT_EQ(1, 1);\n\
+   }"
 ;;
